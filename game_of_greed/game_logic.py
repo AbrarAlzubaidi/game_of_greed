@@ -16,8 +16,4 @@ class GameLogic():
         return tuple(randomList)
 
 if __name__ == "__main__":
-    values = GameLogic.roll_dice(4)
-    print (values)
-    print(len(values) == 4)
-    value = values[0]
-    print(1 <= value <= 6)
+    pass
