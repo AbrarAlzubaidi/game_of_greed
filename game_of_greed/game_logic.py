@@ -5,7 +5,7 @@ from collections import Counter
 class GameLogic():
 
     def __init__(self, rollValue):
-        self.rollValue=rollValue
+        pass
 
     @staticmethod
     def roll_dice(rollValue):
