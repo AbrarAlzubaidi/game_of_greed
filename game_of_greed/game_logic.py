@@ -7,6 +7,9 @@ class GameLogic():
 
     @staticmethod
     def roll_dice(rollValue):
+        """
+        this method to generate random numbres between 1 to 6
+        """
         randomList=[]
         i=0
         while i<rollValue:
