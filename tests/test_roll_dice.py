@@ -57,4 +57,6 @@ def test_6_dice():
     for value in values:
         assert 1 <= value <= 6
 
+ 
+
     # (5,4,3,5,5,6)
