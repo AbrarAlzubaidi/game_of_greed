@@ -23,7 +23,6 @@
 [Abrar PR](https://github.com/AbrarAlzubaidi/game_of_greed/pull/3)
 
 **lab-7**
-[Issa & Farouk & Yassen PR](https://github.com/AbrarAlzubaidi/game_of_greed/pull/9)
-[Malak & Abrar PR](https://github.com/AbrarAlzubaidi/game_of_greed/pull/10)
+[PR](https://github.com/AbrarAlzubaidi/game_of_greed/pull/11)
 
 
