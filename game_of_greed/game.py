@@ -4,6 +4,7 @@ class Game:
     def __init__(self, roller=None):
         self.roller = roller
     def play(self):
+        logic = GameLogic()
         print('Welcome to Game of Greed')
         wanna_play = input('Wanna play? ')
         if wanna_play == 'n':
@@ -18,82 +19,98 @@ class Game:
             print(','.join(nums))
             decision = input('Enter dice to keep (no spaces), or (q)uit: ')
             i=1
-            if decision == "1":
-                while decision != 'q':
-                    if decision == "1":
-                        print("You have 100 unbanked points and 5 dice remaining")
-                    decision2 = input('(r)oll again, (b)ank your points or (q)uit ')
-                    if decision2== "b":
-                        print (f"You banked 100 points in round {i}")
-                        print (f"Total score is {i*100} points")
-                        print(f'Starting round {i+1}')
-                        print('Rolling 6 dice...')
-                        rolled_dice = self.roller(6)
-                        nums = []
-                        for y in rolled_dice:
-                            nums.append(str(y))
-                        print(','.join(nums))
-                    if decision2=="q":
-                        break
-                    i+=1
-                    decision = input('Enter dice to keep (no spaces), or (q)uit: ')
-                print("Total score is 200 points")
-                print("Thanks for playing. You earned 200 points")
+            res = 0
+            while decision != 'q':
+                
+                rest = tuple(decision)
+                result = logic.calculate_score(rest)
+                res+=result
+
+                print(f"You have {result} unbanked points and {6-len(rest)} dice remaining")
+                decision2 = input('(r)oll again, (b)ank your points or (q)uit ')
+                if decision2== "b":
+                    print (f"You banked {result} points in round {i}")
+                    print (f"Total score is {res} points")
+                    print(f'Starting round {i+1}')
+                    print('Rolling 6 dice...')
+                    rolled_dice = self.roller(6)
+                    nums = []
+                    for y in rolled_dice:
+                        nums.append(str(y))
+                    print(','.join(nums))
+                
+                if decision2=="r":
+                    print('Rolling 6 dice...')
+                    rolled_dice = self.roller(6)
+                    nums = []
+                    for i in rolled_dice:
+                        nums.append(str(i))
+                    print(','.join(nums))
+
+                if decision2=="q":
+                    print(f"Total score is {res} points")
+                    print(f"Thanks for playing. You earned {res} points")
+
+                    break
+                i+=1
+                decision = input('Enter dice to keep (no spaces), or (q)uit: ')
+            
+               
 
             
-            if decision == "5":
-                while decision != 'q':
-                    if decision == "5":
-                        print("You have 50 unbanked points and 5 dice remaining")
-                    decision2 = input('(r)oll again, (b)ank your points or (q)uit ')
+            # if decision == "5":
+            #     while decision != 'q':
+            #         if decision == "5":
+            #             print("You have 50 unbanked points and 5 dice remaining")
+            #         decision2 = input('(r)oll again, (b)ank your points or (q)uit ')
 
-                    if decision2=="b":
-                        print (f"You banked 50 points in round {i}")
-                        print (f"Total score is {i*50} points")
-                        print(f'Starting round {i+1}')
-                        print('Rolling 6 dice...')
-                        rolled_dice = self.roller(6)
-                        nums = []
-                        for y in rolled_dice:
-                            nums.append(str(y))
-                        print(','.join(nums))
-                    if decision2=="q":
-                        break
-                    i+=1
-                    decision = input('Enter dice to keep (no spaces), or (q)uit: ')
-                print("Total score is 50 points")
-                print("Thanks for playing. You earned 50 points")
+            #         if decision2=="b":
+            #             print (f"You banked 50 points in round {i}")
+            #             print (f"Total score is {i*50} points")
+            #             print(f'Starting round {i+1}')
+            #             print('Rolling 6 dice...')
+            #             rolled_dice = self.roller(6)
+            #             nums = []
+            #             for y in rolled_dice:
+            #                 nums.append(str(y))
+            #             print(','.join(nums))
+            #         if decision2=="q":
+            #             break
+            #         i+=1
+            #         decision = input('Enter dice to keep (no spaces), or (q)uit: ')
+            #     print("Total score is 50 points")
+            #     print("Thanks for playing. You earned 50 points")
 
 
-            if decision == "112233":
-                if decision =="112233":
-                    print("You have 1500 unbanked points and 0 dice remaining")
-                    decision1 = input('(r)oll again, (b)ank your points or (q)uit ')
-                    if decision1=="r":
-                        print('Rolling 6 dice...')
-                        rolled_dice = self.roller(6)
-                        nums = []
-                        for i in rolled_dice:
-                            nums.append(str(i))
-                        print(','.join(nums))
-                    decision2 = int(input('Enter dice to keep (no spaces), or (q)uit: '))
-                    if decision2 ==44441:
-                        print("You have 2400 unbanked points and 1 dice remaining")
-                    decision3 = input('(r)oll again, (b)ank your points or (q)uit ')
-                    if decision3=="b":
-                        print ("You banked 2400 points in round 1")
-                        print ("Total score is 2400 points")
-                        print('Starting round 2')
-                        print('Rolling 6 dice...')
-                        rolled_dice = self.roller(6)
-                        nums = []
-                        for i in rolled_dice:
-                            nums.append(str(i))
-                        print(','.join(nums))
-                    decision2 = input('Enter dice to keep (no spaces), or (q)uit: ')
-                    if decision2 =="q":
-                        print("Total score is 2400 points")
-                        print("Thanks for playing. You earned 2400 points")
+            # if decision == "112233":
+            #     if decision =="112233":
+            #         print("You have 1500 unbanked points and 0 dice remaining")
+            #         decision1 = input('(r)oll again, (b)ank your points or (q)uit ')
+            #         if decision1=="r":
+            #             print('Rolling 6 dice...')
+            #             rolled_dice = self.roller(6)
+            #             nums = []
+            #             for i in rolled_dice:
+            #                 nums.append(str(i))
+            #             print(','.join(nums))
+            #         decision2 = int(input('Enter dice to keep (no spaces), or (q)uit: '))
+            #         if decision2 ==44441:
+            #             print("You have 2400 unbanked points and 1 dice remaining")
+            #         decision3 = input('(r)oll again, (b)ank your points or (q)uit ')
+            #         if decision3=="b":
+            #             print ("You banked 2400 points in round 1")
+            #             print ("Total score is 2400 points")
+            #             print('Starting round 2')
+            #             print('Rolling 6 dice...')
+            #             rolled_dice = self.roller(6)
+            #             nums = []
+            #             for i in rolled_dice:
+            #                 nums.append(str(i))
+            #             print(','.join(nums))
+            #         decision2 = input('Enter dice to keep (no spaces), or (q)uit: ')
+            #         if decision2 =="q":
+            #             print("Total score is 2400 points")
+            #             print("Thanks for playing. You earned 2400 points")
 
           
           
