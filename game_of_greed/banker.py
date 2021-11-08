@@ -11,6 +11,7 @@ class Banker:
         This method is to store the points on the shelf
         """
         self.shelved += points
+        return self.shelved
 
         
     def bank(self):
@@ -20,7 +21,7 @@ class Banker:
         sender=  self.shelved
         self.shelved=0
         self.balance+=sender
-        return sender
+        return self.balance
 
        
     def clear_shelf(self):
