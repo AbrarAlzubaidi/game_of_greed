@@ -19,3 +19,6 @@ def test_yes_for_wanna_play2():
 
 def test_zilch():
     Flo.test('tests/flow/zilcher.sim.txt')
+    
+def test_cheater():
+    Flo.test('tests/flow/cheat_and_fix.sim.txt')
