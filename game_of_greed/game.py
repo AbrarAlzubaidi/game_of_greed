@@ -21,7 +21,10 @@ class Game:
             print(','.join(nums))
             decision = input('Enter dice to keep (no spaces), or (q)uit: ')
             round=1
-            if decision != 'q':
+            
+            if decision == 'q':
+              print ("Thanks for playing. You earned 0 points")
+            else:
                 rest = tuple(decision)
                 result = logic.calculate_score(rest)
                 point = banker.shelf(result)
