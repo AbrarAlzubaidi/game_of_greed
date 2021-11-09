@@ -38,7 +38,7 @@ class GameLogic():
                 happened = int(item[i])
                 if happened >= 3:
                     if int(i) == 1:
-                        score += (i * 1000) * (happened-2)
+                        score += (int(i) * 1000) * (happened-2)
                     else:
                         score += (int(i) * 100) * (happened-2)
                 else:
