@@ -16,3 +16,9 @@ def test_bank3():
 
 def test_yes_for_wanna_play2():
     Flo.test('tests/flow/one_and_done.sim.txt')
+
+def test_zilch():
+    Flo.test('tests/flow/zilcher.sim.txt')
+    
+def test_cheater():
+    Flo.test('tests/flow/cheat_and_fix.sim.txt')
