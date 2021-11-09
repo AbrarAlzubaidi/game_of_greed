@@ -23,6 +23,13 @@
 [Abrar PR](https://github.com/AbrarAlzubaidi/game_of_greed/pull/3)
 
 **lab-7**
+
 [PR](https://github.com/AbrarAlzubaidi/game_of_greed/pull/11)
+
+**lab-8**
+
+[PR](https://github.com/AbrarAlzubaidi/game_of_greed/pull/12)
+
+
 
 
