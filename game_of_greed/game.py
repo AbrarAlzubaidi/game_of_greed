@@ -1,9 +1,11 @@
 from game_of_greed.game_logic import GameLogic
 from game_of_greed.banker import Banker
+from collections import Counter
 
 class Game:
     def __init__(self, roller=None):
         self.roller = roller
+        self.diceNumber=6
     def play(self):
         banker = Banker()
         logic = GameLogic()
@@ -12,68 +14,86 @@ class Game:
         if wanna_play == 'n':
             print('OK. Maybe another time')
         else:
-            print('Starting round 1')
-            print('Rolling 6 dice...')
-            rolled_dice = self.roller(6)
-            nums = []
-            for i in rolled_dice:
-                nums.append(str(i))
-            print(','.join(nums))
-            decision = input('Enter dice to keep (no spaces), or (q)uit: ')
-            round=1
-            
-            if decision == 'q':
-              print ("Thanks for playing. You earned 0 points")
-            else:
-                rest = tuple(decision)
-                result = logic.calculate_score(rest)
-                point = banker.shelf(result)
-            while decision != 'q':
-                
-                
-                print(f"You have {point} unbanked points and {6-len(rest)} dice remaining")
-                
-                decision2 = input('(r)oll again, (b)ank your points or (q)uit ')
-                if decision2== "b":
-                    print (f"You banked {point} points in round {round}")
-                    banke = banker.bank()
-                    print (f"Total score is {banke} points")
-                    print(f'Starting round {round+1}')
-                    print('Rolling 6 dice...')
-                    rolled_dice = self.roller(6)
-                    nums = []
-                    for y in rolled_dice:
-                        nums.append(str(y))
-                    print(','.join(nums))
+            while self.diceNumber !=0:
+                print('Starting round 1')
+                print('Rolling 6 dice...')
+                rolled_dice = self.roller(6)
+                nums = []
+                for i in rolled_dice:
+                    nums.append(str(i))
+                print(','.join(nums))
+                counterNumber = Counter(nums).values()
+
+                if 3 in counterNumber or "1" in nums or "5" in nums:
                     decision = input('Enter dice to keep (no spaces), or (q)uit: ')
-                    round+=1
+                    round=1
+                    
                     if decision == 'q':
-                        break
+                        print ("Thanks for playing. You earned 0 points")
                     else:
                         rest = tuple(decision)
                         result = logic.calculate_score(rest)
                         point = banker.shelf(result)
+                    while decision != 'q':
+                        
+                        
+                        print(f"You have {point} unbanked points and {6-len(rest)} dice remaining")
+                        
+                        decision2 = input('(r)oll again, (b)ank your points or (q)uit ')
+                        if decision2== "b":
+                            print (f"You banked {point} points in round {round}")
+                            banke = banker.bank()
+                            print (f"Total score is {banke} points")
+                            print(f'Starting round {round+1}')
+                            print('Rolling 6 dice...')
+                            rolled_dice = self.roller(self.diceNumber)
+                            nums = []
+                            for y in rolled_dice:
+                                nums.append(str(y))
+                            print(','.join(nums))
+                            decision = input('Enter dice to keep (no spaces), or (q)uit: ')
+                            round+=1
+                            counterNumber = Counter(nums).values()
+                            if 3 not in counterNumber and "1" not in nums and "5" not in nums:
+                                break
+                            decision = input('Enter dice to keep (no spaces), or (q)uit: ')
+                            if decision == 'q':
+                                self.diceNumber=0
+                                break
+                            else:
+                                rest = tuple(decision)
+                                result = logic.calculate_score(rest)
+                                point = banker.shelf(result)
+                        
+                        if decision2=="r":
+                            self.diceNumber-=1
+                            print(f'Rolling {self.diceNumber} dice...')
+                            rolled_dice = self.roller(self.diceNumber)
+                            nums = []
+                            for i in rolled_dice:
+                                nums.append(str(i))
+                            print(','.join(nums))
+                            counterNumber = Counter(nums).values()
+                            if 3 not in counterNumber and "1" not in nums and "5" not in nums:
+                                break
+                            decision = input('Enter dice to keep (no spaces), or (q)uit: ')
+                            if decision == 'q':
+                                self.diceNumber=0
+                                break
+                            else:
+                                rest = tuple(decision)
+                                result = logic.calculate_score(rest)
+                                point = banker.shelf(result)
+
+                        if decision2=="q":
+                            print(f"Total score is {banke} points")
+                            print(f"Thanks for playing. You earned {banke} points")
+                            self.diceNumber=0
+                            break
+
+                else:
+                    print('Zilch!!! Round over')
                 
-                if decision2=="r":
-                    print('Rolling 6 dice...')
-                    rolled_dice = self.roller(6)
-                    nums = []
-                    for i in rolled_dice:
-                        nums.append(str(i))
-                    print(','.join(nums))
-                    decision = input('Enter dice to keep (no spaces), or (q)uit: ')
-                    if decision == 'q':
-                        break
-                    else:
-                        rest = tuple(decision)
-                        result = logic.calculate_score(rest)
-                        point = banker.shelf(result)
-
-                if decision2=="q":
-                    print(f"Total score is {banke} points")
-                    print(f"Thanks for playing. You earned {banke} points")
-
-                    break
           
           
 if __name__ == "__main__":
