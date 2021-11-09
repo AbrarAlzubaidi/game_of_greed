@@ -6,6 +6,8 @@ class Game:
     def __init__(self, roller=None):
         self.roller = roller
         self.diceNumber=6
+        self.zilch = None
+        self.last=False
     def play(self):
         banker = Banker()
         logic = GameLogic()
@@ -14,8 +16,9 @@ class Game:
         if wanna_play == 'n':
             print('OK. Maybe another time')
         else:
+            round=1
             while self.diceNumber !=0:
-                print('Starting round 1')
+                print(f'Starting round {round}')
                 print('Rolling 6 dice...')
                 rolled_dice = self.roller(6)
                 nums = []
@@ -23,36 +26,52 @@ class Game:
                     nums.append(str(i))
                 print(','.join(nums))
                 counterNumber = Counter(nums).values()
+                # cheater = Counter(nums)
 
                 if 3 in counterNumber or "1" in nums or "5" in nums:
                     decision = input('Enter dice to keep (no spaces), or (q)uit: ')
-                    round=1
+                    # cheat = Counter(decision)
+                    # shet=[]
+                    # for i in cheat.keys():
+                    #     if cheater[i]>=cheat[i]:
+                    #         shet.append('yes')
+                    #     else:
+                    #         shet.append('no')
                     
-                    if decision == 'q':
+                    # if('no' not in shet):
+                    #     print('good')
+                    if self.last:
+                        print('Total score is 0 points')
+                    if decision == 'q' :
+                        
                         print ("Thanks for playing. You earned 0 points")
+                        self.diceNumber =0
                     else:
                         rest = tuple(decision)
                         result = logic.calculate_score(rest)
                         point = banker.shelf(result)
+
                     while decision != 'q':
                         
-                        
-                        print(f"You have {point} unbanked points and {6-len(rest)} dice remaining")
-                        
+                        self.last = True
+                        print(f"You have {point} unbanked points and {self.diceNumber-len(rest)} dice remaining")
+                        if (len(rest)) == 6 :
+                            self.diceNumber=12
+
                         decision2 = input('(r)oll again, (b)ank your points or (q)uit ')
+
                         if decision2== "b":
                             print (f"You banked {point} points in round {round}")
                             banke = banker.bank()
                             print (f"Total score is {banke} points")
-                            print(f'Starting round {round+1}')
+                            round+=1
+                            print(f'Starting round {round}')
                             print('Rolling 6 dice...')
                             rolled_dice = self.roller(self.diceNumber)
                             nums = []
                             for y in rolled_dice:
                                 nums.append(str(y))
                             print(','.join(nums))
-                            decision = input('Enter dice to keep (no spaces), or (q)uit: ')
-                            round+=1
                             counterNumber = Counter(nums).values()
                             if 3 not in counterNumber and "1" not in nums and "5" not in nums:
                                 break
@@ -66,7 +85,7 @@ class Game:
                                 point = banker.shelf(result)
                         
                         if decision2=="r":
-                            self.diceNumber-=1
+                            self.diceNumber-=len(rest)
                             print(f'Rolling {self.diceNumber} dice...')
                             rolled_dice = self.roller(self.diceNumber)
                             nums = []
@@ -75,6 +94,7 @@ class Game:
                             print(','.join(nums))
                             counterNumber = Counter(nums).values()
                             if 3 not in counterNumber and "1" not in nums and "5" not in nums:
+                                self.zilch = 'zilch'
                                 break
                             decision = input('Enter dice to keep (no spaces), or (q)uit: ')
                             if decision == 'q':
@@ -86,13 +106,25 @@ class Game:
                                 point = banker.shelf(result)
 
                         if decision2=="q":
+                            banke = banker.bank()
                             print(f"Total score is {banke} points")
                             print(f"Thanks for playing. You earned {banke} points")
-                            self.diceNumber=0
+                            self.diceNumber = 0
                             break
+                        if self.diceNumber == 0:
+                            break
+
+                    if self.zilch == 'zilch':
+                            print('Zilch!!! Round over')
+                            print(f'You banked 0 points in round {round}')
+                            print('Total score is 0 points')
+                            round+=1
 
                 else:
                     print('Zilch!!! Round over')
+                    print('You banked 0 points in round 1')
+                    print('Total score is 0 points')
+                    round+=1
                 
           
           
