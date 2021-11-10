@@ -5,6 +5,7 @@ at same level as pyproject.toml
 import builtins
 import re
 from abc import abstractmethod
+from collections import Counter
 
 
 from game_of_greed.game import Game
@@ -73,7 +74,9 @@ class NervousNellie(BasePlayer):
 
             
         elif args[0].startswith('Enter dice'):
-            return "".join([str(i) for i in self.rolled_dice])
+            bankNumber = self.AddNumber()
+            return bankNumber
+            
          
 
 
@@ -83,6 +86,15 @@ class NervousNellie(BasePlayer):
         else:
             return 'q'
 
+    def AddNumber(self):
+        rollstring = "".join([str(i) for i in self.rolled_dice])
+        counter = Counter(rollstring)
+        if len(counter) == 6 or len(counter) == 3 or len(counter) == 1:
+            return rollstring
+        elif len(counter) == 2:
+            return rollstring if '1' in counter else max(list(counter.keys()))*3
+        else:
+            return '1'*counter['1'] +'5'*counter['5'] 
 
 
 
