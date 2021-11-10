@@ -4,7 +4,7 @@ from collections import Counter
 
 class Game:
     def __init__(self, roller=None):
-        self.roller = roller
+        
         self.diceNumber=6
         self.zilch = None
         self.last=False
@@ -12,6 +12,7 @@ class Game:
         self.point=0
         self.banker = Banker()
         self.logic = GameLogic()
+        self.roller = roller or self.logic.roll_dice()
     def play(self):
         
         print('Welcome to Game of Greed')
@@ -21,14 +22,7 @@ class Game:
         else:
             round=1
             while self.diceNumber !=0:
-                print(f'Starting round {round}')
-                print('Rolling 6 dice...')
-                
-                rolled_dice = self.roller(6)
-                nums = []
-                for i in rolled_dice:
-                    nums.append(str(i))
-                print(','.join(nums))
+                nums=self.begin(round)
                 counterNumber = Counter(nums)
                 if counterNumber.most_common(1)[0][1]>2 or "1" in nums or "5" in nums:
                     decision=self.Cheater(nums)
@@ -58,13 +52,7 @@ class Game:
                             banke = self.banker.bank()
                             print (f"Total score is {banke} points")
                             round+=1
-                            print(f'Starting round {round}')
-                            print('Rolling 6 dice...')
-                            rolled_dice = self.roller(self.diceNumber)
-                            nums = []
-                            for y in rolled_dice:
-                                nums.append(str(y))
-                            print(','.join(nums))
+                            nums=self.begin(round)
                             counterNumber = Counter(nums)
                             if not counterNumber.most_common(1)[0][1]>2 and "1" not in nums and "5" not in nums:
                                 break
@@ -140,6 +128,18 @@ class Game:
             else :
                 break
         return decision
+
+    def begin(self, x):
+        banker = Banker()
+        logic = GameLogic()
+        print(f'Starting round {x}')
+        print('Rolling 6 dice...')
+        rolled_dice = self.roller(6)
+        nums = []
+        for i in rolled_dice:
+            nums.append(str(i))
+        print(','.join(nums))
+        return nums
 if __name__ == "__main__":
     game=Game(GameLogic.roll_dice)
     game.play()
