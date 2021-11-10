@@ -48,14 +48,14 @@ class GameLogic():
                         score += 50*happened
         return score
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
 #    testl = GameLogic()
 # #    s
 #    stry='444'
 #    rest = tuple(stry)
 #    result = testl.calculate_score(rest)
-#    rest2 =(Counter([1,2,1,2,3]).values())
-
+   rest2 =(Counter([1,2,1,2,3]).most_common(1)[0][1])
+   print(rest2)
 # if 3 in rest2:
 #     print('hello')
 
