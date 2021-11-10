@@ -10,9 +10,12 @@ class Game:
         self.last=False
         self.result = 0
         self.point=0
+        self.total=0
+        self.round=0
+        self.average=0
         self.banker = Banker()
         self.logic = GameLogic()
-        self.roller = roller or self.logic.roll_dice()
+        self.roller = roller or   GameLogic.roll_dice
     def play(self):
         
         print('Welcome to Game of Greed')
@@ -20,17 +23,18 @@ class Game:
         if wanna_play == 'n':
             print('OK. Maybe another time')
         else:
-            round=1
-            while self.diceNumber !=0:
-                nums=self.begin(round)
+            self.round=1
+            while self.diceNumber !=0 and   self.round<10 :
+                nums=self.begin(self.round)
                 counterNumber = Counter(nums)
                 if counterNumber.most_common(1)[0][1]>2 or "1" in nums or "5" in nums:
                     decision=self.Cheater(nums)
                    
                     if self.last:
                         print('Total score is 0 points')
+
                     if decision == 'q' :
-                        
+                       
                         print ("Thanks for playing. You earned 0 points")
                         self.diceNumber =0
                     else:
@@ -38,7 +42,7 @@ class Game:
                         self.result = self.logic.calculate_score(rest)
                         self.point = self.banker.shelf(self.result)
 
-                    while decision != 'q':
+                    while decision != 'q' and self.round<10:
                         
                         self.last = True
                         print(f"You have {self.point} unbanked points and {self.diceNumber-len(rest)} dice remaining")
@@ -48,16 +52,21 @@ class Game:
                         decision2 = input('(r)oll again, (b)ank your points or (q)uit ')
 
                         if decision2== "b":
-                            print (f"You banked {self.point} points in round {round}")
+                            print (f"You banked {self.point} points in round {self.round}")
                             banke = self.banker.bank()
+                            self.total=banke
                             print (f"Total score is {banke} points")
-                            round+=1
-                            nums=self.begin(round)
+                            self.average=banke//(self.round)
+
+
+                            self.round+=1
+                            nums=self.begin(self.round)
                             counterNumber = Counter(nums)
                             if not counterNumber.most_common(1)[0][1]>2 and "1" not in nums and "5" not in nums:
                                 break
                             decision=self.Cheater(nums)
                             if decision == 'q':
+
                                 self.diceNumber=0
                                 break
                             else:
@@ -80,6 +89,7 @@ class Game:
                                 break
                             decision=self.Cheater(nums)
                             if decision == 'q':
+
                                 self.diceNumber=0
                                 break
                             else:
@@ -88,7 +98,12 @@ class Game:
                                 self.point = self.banker.shelf(self.result)
                         if decision2=="q":
                             banke = self.banker.bank()
+                            self.total=banke
+
                             print(f"Total score is 0 points")
+                            self.average=banke//(self.round)
+
+
                             print(f"Thanks for playing. You earned 0 points")
                             self.diceNumber = 0
                             break
@@ -97,15 +112,18 @@ class Game:
 
                     if self.zilch == 'zilch':
                             print('Zilch!!! Round over')
-                            print(f'You banked 0 points in round {round}')
+                            print(f'You banked 0 points in round {self.round}')
                             print('Total score is 0 points')
-                            round+=1
+
+
+                            self.round+=1
 
                 else:
                     print('Zilch!!! Round over')
                     print('You banked 0 points in round 1')
                     print('Total score is 0 points')
-                    round+=1
+
+                    self.round+=1
                 
           
     def Cheater(self,nums):
@@ -113,6 +131,7 @@ class Game:
         while True : 
             decision = input('Enter dice to keep (no spaces), or (q)uit: ')
             if decision == 'q':
+
                 break
             cheat = Counter(decision)
             resultCheater=[]
