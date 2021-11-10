@@ -26,10 +26,10 @@ class Game:
                 for i in rolled_dice:
                     nums.append(str(i))
                 print(','.join(nums))
-                counterNumber = Counter(nums).values()
+                counterNumber = Counter(nums)
                 cheater = Counter(nums)
 
-                if 3 in counterNumber or "1" in nums or "5" in nums:
+                if counterNumber.most_common(1)[0][1]>2 or "1" in nums or "5" in nums:
                     while True : 
 
                         decision = input('Enter dice to keep (no spaces), or (q)uit: ')
@@ -84,8 +84,8 @@ class Game:
                             for y in rolled_dice:
                                 nums.append(str(y))
                             print(','.join(nums))
-                            counterNumber = Counter(nums).values()
-                            if 3 not in counterNumber and "1" not in nums and "5" not in nums:
+                            counterNumber = Counter(nums)
+                            if not counterNumber.most_common(1)[0][1]>2 and "1" not in nums and "5" not in nums:
                                 break
                             while True : 
                                 decision = input('Enter dice to keep (no spaces), or (q)uit: ')
@@ -119,10 +119,10 @@ class Game:
                             for i in rolled_dice:
                                 nums.append(str(i))
                             print(','.join(nums))
-                            counterNumber = Counter(nums).values()
+                            counterNumber = Counter(nums)
                             
                             
-                            if 3 not in counterNumber and "1" not in nums and "5" not in nums:
+                            if not counterNumber.most_common(1)[0][1]>2 and "1" not in nums and "5" not in nums:
                                 self.zilch = 'zilch'
                                 break
                             while True : 
